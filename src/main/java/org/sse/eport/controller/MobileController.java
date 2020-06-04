@@ -2,6 +2,7 @@ package org.sse.eport.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sse.eport.Basic.Result;
@@ -17,12 +18,17 @@ public class MobileController {
     @Autowired
     private MobileService mobileService;
     @PostMapping("/postrepairOrder")
-    public Result PostRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
-        return mobileService.PostRepairOrder(mobileRepairOrderReciever);
+    public Result postRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
+        return mobileService.postRepairOrder(mobileRepairOrderReciever);
     }
 
     @PostMapping("/putrepairOrder")
-    public Result PutRepairOrder(MobileRepairOrderPutReciever reciever){
-        return mobileService.PostRepairOrder(reciever);
+    public Result putRepairOrder(MobileRepairOrderPutReciever reciever){
+        return mobileService.postRepairOrder(reciever);
+    }
+
+    @GetMapping("/getRepair")
+    public Result getRepair(String id) {
+        return mobileService.getRepair(id);
     }
 }
