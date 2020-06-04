@@ -17,12 +17,12 @@ public class MobileController {
     @Autowired
     private MobileService mobileService;
     @PostMapping("/postrepairOrder")
-    public Result PostRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
-        return mobileService.PostRepairOrder(mobileRepairOrderReciever);
+    public Result postRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
+        return mobileService.postRepairOrder(mobileRepairOrderReciever);
     }
 
     @PostMapping("/putrepairOrder")
-    public Result PutRepairOrder(MobileRepairOrderPutReciever reciever){
-        return mobileService.PostRepairOrder(reciever);
+    public Result putRepairOrder(MobileRepairOrderPutReciever reciever){
+        return mobileService.postRepairOrder(reciever);
     }
 }

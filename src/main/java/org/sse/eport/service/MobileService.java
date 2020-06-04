@@ -1,22 +1,74 @@
 package org.sse.eport.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.sse.eport.Basic.Result;
 import org.sse.eport.dto.MobileRepairOrderPutReciever;
+import org.sse.eport.entity.EqInUse;
+import org.sse.eport.entity.RepairOrder;
+import org.sse.eport.mapper.MobileMapper;
+
+import java.util.Date;
 
 /**
  * @author ZTL
  */
 @Service
+@Slf4j
 public class MobileService {
-    public Result PostRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
+    @Autowired
+    private MobileMapper mobileMapper;
+
+    public Result postRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
         //添加报修单
-        return new Result();
+        EqInUse eq = mobileMapper.findEqInUseById(mobileRepairOrderReciever.deviceID);
+        if (eq.getStatus().equals("1")) {
+            return Result.fail();
+        }
+        RepairOrder repair_order = new RepairOrder();
+        //这里测试的时候要注意
+        repair_order.setId("0000");
+        repair_order.setReport_picture(mobileRepairOrderReciever.imgURL);
+        repair_order.setRepair_type(mobileRepairOrderReciever.problem_type);
+        repair_order.setDescription(mobileRepairOrderReciever.detail);
+        repair_order.setStatus(mobileRepairOrderReciever.status.toString());
+        repair_order.setTel_number(mobileRepairOrderReciever.phone);
+        repair_order.setEq_id(mobileRepairOrderReciever.deviceID);
+        repair_order.setDispatcher_id("");
+        repair_order.setInsert_by(mobileRepairOrderReciever.id);
+        repair_order.setInsert_by(mobileRepairOrderReciever.id);
+        Date now = new Date();
+        repair_order.setInsert_time(now);
+        repair_order.setUpdate_time(now);
+        try {
+            mobileMapper.addRepairOrder(repair_order);
+            mobileMapper.updateStatusOfEqInUse(eq.getId(),"1");
+            log.info("添加了报修单");
+            return Result.success();
+        }
+        catch (Exception e) {
+            return Result.fail();
+        }
     }
 
-    public Result PutRepairOrder(MobileRepairOrderPutReciever reciever){
+    public Result putRepairOrder(MobileRepairOrderPutReciever reciever){
         //修改报修单
-        return new Result();
+        RepairOrder repair_order = mobileMapper.findRepairOrderById(reciever.id);
+        if (repair_order == null) {
+            return Result.fail();
+        }
+        else {
+            repair_order.setEq_id(reciever.deviceID);
+            repair_order.setReport_picture(reciever.imgURL);
+            repair_order.setDescription(reciever.detail);
+            repair_order.setTel_number(reciever.phone);
+            repair_order.setRepair_type(reciever.problem_type);
+            repair_order.setStatus(reciever.status.toString());
+            mobileMapper.updateRepairOrder(repair_order);
+            log.info("更改了报修单");
+            return Result.success();
+        }
     }
 }
