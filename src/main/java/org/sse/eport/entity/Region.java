@@ -9,7 +9,7 @@ import java.util.Set;
  */
 @Data
 public class Region {
-    private String id;
+    private Integer id;
     private String province;
     private String city;
     private String county;

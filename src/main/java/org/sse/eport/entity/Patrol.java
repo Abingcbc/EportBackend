@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 public class Patrol {
-    private String id;
+    private Integer id;
     private String patrol_start;
     private String patrol_stop;
     private String insert_by;

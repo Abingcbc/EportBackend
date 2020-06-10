@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 public class Factory {
-    private String id;
+    private Integer id;
     private String name;
     private String principal;
     private String phone;

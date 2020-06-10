@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 public class Repairer {
-    private String id;
+    private Integer id;
     private String insert_by;
     private String update_by;
     private Date insert_time;

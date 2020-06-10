@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sse.eport.Basic.Result;
 import org.sse.eport.dto.MobileRepairOrderPutReciever;
+import org.sse.eport.dto.MobileWorkOrderReciever;
 import org.sse.eport.service.MobileService;
 
 /**
@@ -23,6 +24,11 @@ public class MobileController {
 
     @PostMapping("/putrepairOrder")
     public Result putRepairOrder(MobileRepairOrderPutReciever reciever){
-        return mobileService.postRepairOrder(reciever);
+        return mobileService.putRepairOrder(reciever);
+    }
+
+    @PostMapping("/workOrder")
+    public Result postWorkOrder(MobileWorkOrderReciever mobileWorkOrderReciever){
+        return mobileService.postWorkOrder(mobileWorkOrderReciever);
     }
 }

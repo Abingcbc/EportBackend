@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class EqStored {
-    private String id;
+    private Integer id;
     private String product_time;
     private String status;
     private String eq_type_id;

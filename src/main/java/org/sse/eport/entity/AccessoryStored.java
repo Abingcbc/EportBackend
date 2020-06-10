@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class AccessoryStored {
-    private String accessory_id;
+    private Integer accessory_id;
     private String warehouse_id;
     private Integer quantity;
     private String insert_by;

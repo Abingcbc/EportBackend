@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 public class EqType {
-    private String id;
+    private Integer id;
     private String type_name;
     private String model_number;
     private Double price;

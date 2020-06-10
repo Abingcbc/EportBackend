@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.sse.eport.Basic.Result;
 import org.sse.eport.dto.MobileRepairOrderPutReciever;
+import org.sse.eport.dto.MobileWorkOrderReciever;
 import org.sse.eport.entity.EqInUse;
 import org.sse.eport.entity.RepairOrder;
+import org.sse.eport.entity.WorkOrder;
 import org.sse.eport.mapper.MobileMapper;
 
 import java.util.Date;
@@ -23,13 +25,12 @@ public class MobileService {
 
     public Result postRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
         //添加报修单
-        EqInUse eq = mobileMapper.findEqInUseById(mobileRepairOrderReciever.deviceID);
-        if (eq.getStatus().equals("1")) {
+        EqInUse eq = mobileMapper.findEqInUseById(Integer.valueOf(mobileRepairOrderReciever.deviceID));
+        if ("1".equals(eq.getStatus())) {
             return Result.fail();
         }
         RepairOrder repair_order = new RepairOrder();
         //这里测试的时候要注意
-        repair_order.setId("0000");
         repair_order.setReport_picture(mobileRepairOrderReciever.imgURL);
         repair_order.setRepair_type(mobileRepairOrderReciever.problem_type);
         repair_order.setDescription(mobileRepairOrderReciever.detail);
@@ -55,7 +56,7 @@ public class MobileService {
 
     public Result putRepairOrder(MobileRepairOrderPutReciever reciever){
         //修改报修单
-        RepairOrder repair_order = mobileMapper.findRepairOrderById(reciever.id);
+        RepairOrder repair_order = mobileMapper.findRepairOrderById(Integer.valueOf(reciever.id));
         if (repair_order == null) {
             return Result.fail();
         }
@@ -69,6 +70,26 @@ public class MobileService {
             mobileMapper.updateRepairOrder(repair_order);
             log.info("更改了报修单");
             return Result.success();
+        }
+    }
+
+    public Result postWorkOrder(MobileWorkOrderReciever mobileWorkOrderReciever){
+        WorkOrder work_order = mobileMapper.findWorkOrderById(Integer.valueOf(mobileWorkOrderReciever.id));
+        if (work_order == null)
+        {
+            return Result.fail();
+        }
+        else
+        {
+            try
+            {
+                mobileMapper.updateWorkOrderPicAndStatus(work_order.getId(),mobileWorkOrderReciever.imgURL,mobileWorkOrderReciever.status.toString());
+                return Result.success();
+            }
+            catch(Exception e)
+            {
+                return Result.fail();
+            }
         }
     }
 }

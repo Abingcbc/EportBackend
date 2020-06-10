@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 public class Staff {
-    private String id;
+    private Integer id;
     private String name;
     private String account_id;
     private String password;

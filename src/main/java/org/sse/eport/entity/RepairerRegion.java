@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class RepairerRegion {
-    private String repairer_id;
+    private Integer repairer_id;
     private String region_id;
     private String insert_by;
     private String update_by;

@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class WorkOrder {
-    private String id;
+    private Integer id;
     private String status;
     private String repairer_id;
     private String dispatcher_id;

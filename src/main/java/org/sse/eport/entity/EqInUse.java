@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 public class EqInUse {
-    private String id;
+    private Integer id;
     private String production_time;
     private String install_time;
     private String owner;

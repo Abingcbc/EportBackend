@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class EqTypeAccessory {
-    private String eq_type_id;
+    private Integer eq_type_id;
     private String accessory_id;
     private String insert_by;
     private String update_by;

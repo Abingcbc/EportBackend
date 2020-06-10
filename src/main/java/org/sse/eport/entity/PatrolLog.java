@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class PatrolLog {
-    private String id;
+    private Integer id;
     private String patrol_id;
     private String eq_id;
     private String patrol_time;

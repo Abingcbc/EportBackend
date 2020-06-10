@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @Data
 public class Dispatcher {
-    private String id;
+    private Integer id;
     private String dispatch_start;
     private String dispatch_stop;
     private String insert_by;

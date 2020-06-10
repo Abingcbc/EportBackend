@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class RepairOrder {
-    private String id;
+    private Integer id;
     private String report_picture;
     private String repair_type;
     private String description;

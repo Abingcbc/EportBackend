@@ -10,7 +10,7 @@ import java.util.Set;
  */
 @Data
 public class WareHouse {
-    private String id;
+    private Integer id;
     private String name;
     private String region_id;
     private String location;

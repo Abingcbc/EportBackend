@@ -9,7 +9,7 @@ import java.util.Date;
  */
 @Data
 public class PatrolRegion {
-    private String patrol_id;
+    private Integer patrol_id;
     private String region_id;
     private String insert_by;
     private String update_by;
