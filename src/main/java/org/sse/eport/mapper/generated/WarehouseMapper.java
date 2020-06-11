@@ -2,9 +2,12 @@ package org.sse.eport.mapper.generated;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.sse.eport.pojo.Warehouse;
 import org.sse.eport.pojo.WarehouseExample;
 
+@Component
 public interface WarehouseMapper {
     int countByExample(WarehouseExample example);
 

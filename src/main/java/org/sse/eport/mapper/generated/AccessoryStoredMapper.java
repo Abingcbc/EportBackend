@@ -2,10 +2,12 @@ package org.sse.eport.mapper.generated;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.sse.eport.pojo.AccessoryStored;
 import org.sse.eport.pojo.AccessoryStoredExample;
 import org.sse.eport.pojo.AccessoryStoredKey;
 
+@Component
 public interface AccessoryStoredMapper {
     int countByExample(AccessoryStoredExample example);
 

@@ -92,7 +92,7 @@ public class EqInUse {
         this.address = address == null ? null : address.trim();
     }
 
-    public BigDecimal getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
@@ -100,7 +100,7 @@ public class EqInUse {
         this.longitude = longitude;
     }
 
-    public BigDecimal getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 

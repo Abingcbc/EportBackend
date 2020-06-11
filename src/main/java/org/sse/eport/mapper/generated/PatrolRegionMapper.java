@@ -2,10 +2,12 @@ package org.sse.eport.mapper.generated;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.sse.eport.pojo.PatrolRegion;
 import org.sse.eport.pojo.PatrolRegionExample;
 import org.sse.eport.pojo.PatrolRegionKey;
 
+@Component
 public interface PatrolRegionMapper {
     int countByExample(PatrolRegionExample example);
 

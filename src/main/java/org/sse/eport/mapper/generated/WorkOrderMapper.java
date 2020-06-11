@@ -2,9 +2,11 @@ package org.sse.eport.mapper.generated;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.sse.eport.pojo.WorkOrder;
 import org.sse.eport.pojo.WorkOrderExample;
 
+@Component
 public interface WorkOrderMapper {
     int countByExample(WorkOrderExample example);
 

@@ -8,6 +8,8 @@ import org.sse.eport.entity.PatrolLog;
 import org.sse.eport.entity.RepairOrder;
 import org.sse.eport.entity.WorkOrder;
 
+import java.util.List;
+
 /**
  * @author ZTL
  */
@@ -17,7 +19,7 @@ public interface MobileMapper {
     @Select("select * " +
             "from eq_in_use " +
             "where id = #{id}")
-    EqInUse findEqInUseById(@Param("id")Integer id);
+    EqInUse findEqInUseById(@Param("id") Integer id);
 
     @Insert("insert into repair_order(report_picture,repair_type," +
             "description,status,tel_number,eq_id,dispatcher_id,insert_by," +
@@ -30,12 +32,12 @@ public interface MobileMapper {
     @Update("update eq_in_use " +
             "set status = #{status} " +
             "where id = #{id}")
-    Boolean updateStatusOfEqInUse(@Param("id")Integer id,@Param("status")String status);
+    Boolean updateStatusOfEqInUse(@Param("id") Integer id, @Param("status") String status);
 
     @Select("select * " +
             "from repair_order " +
             "where id = #{id}")
-    RepairOrder findRepairOrderById(@Param("id")Integer id);
+    RepairOrder findRepairOrderById(@Param("id") Integer id);
 
     @Update("update repair_order " +
             "set eq_id = #{eq_id},report_picture= #{report_picture}," +
@@ -47,16 +49,27 @@ public interface MobileMapper {
     @Select("select * " +
             "from work_order " +
             "where id = #{id}")
-    WorkOrder findWorkOrderById(@Param("id")Integer id);
+    WorkOrder findWorkOrderById(@Param("id") Integer id);
 
     @Update("update work_order " +
             "set work_picture = #{workPicture}, status = #{status} " +
             "where id = #{id}")
-    Boolean updateWorkOrderPicAndStatus(@Param("id")Integer id,
-                                        @Param("workPicture")String workPicture,
-                                        @Param("status")String status);
+    Boolean updateWorkOrderPicAndStatus(@Param("id") Integer id,
+                                        @Param("workPicture") String workPicture,
+                                        @Param("status") String status);
 
     @Insert("insert into patrol_log(patrol_id, eq_id, patrol_time, patrol_result, patrol_picture, insert_by, update_by, insert_time, update_time) \n" +
             "value (#{patrol_id}, #{eq_id}, #{patrol_time}, #{patrol_result}, #{patrol_picture}, #{insert_by}, #{update_by}, NOW(), NOW())")
     Boolean addPatrolOrder(PatrolLog patrolLog);
+
+    //TODO
+    @Select({
+            "<script>" + "select * from repair_order left join eq_in_use eiu on repair_order.EQ_ID = eiu.ID\n" +
+                    "where repair_order.STATUS = '0' && eiu.REGION_ID in " +
+                    "<foreach collections='regions' item='region' open='(' separator=',' close=')'>" +
+                    "#{region}" +
+                    "</foreach>" +
+                    "</script>"
+    })
+    List<RepairOrder> getRepairOrderWithEqInUse(@Param("regions") List<Integer> regions);
 }

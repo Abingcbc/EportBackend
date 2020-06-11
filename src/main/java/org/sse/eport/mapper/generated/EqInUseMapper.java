@@ -2,9 +2,11 @@ package org.sse.eport.mapper.generated;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.sse.eport.pojo.EqInUse;
 import org.sse.eport.pojo.EqInUseExample;
 
+@Component
 public interface EqInUseMapper {
     int countByExample(EqInUseExample example);
 

@@ -39,8 +39,8 @@ public class MobileController {
         return mobileService.postPatrolOrder(receiver);
     }
 
-//    @GetMapping("/getRepair")
-//    public Result getRepair(String id) {
-//        return mobileService.getRepair(id);
-//    }
+    @GetMapping("/getRepair")
+    public Result getRepair(String id) {
+        return mobileService.getRepair(id);
+    }
 }

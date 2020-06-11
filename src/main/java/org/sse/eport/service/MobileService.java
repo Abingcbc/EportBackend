@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.sse.eport.Basic.Result;
 import org.sse.eport.dto.MobilePatrolOrderReceiver;
+import org.sse.eport.dto.MobileRepairOrderDto;
 import org.sse.eport.dto.MobileRepairOrderPutReciever;
 import org.sse.eport.dto.MobileWorkOrderReciever;
 import org.sse.eport.entity.EqInUse;
@@ -13,8 +14,15 @@ import org.sse.eport.entity.PatrolLog;
 import org.sse.eport.entity.RepairOrder;
 import org.sse.eport.entity.WorkOrder;
 import org.sse.eport.mapper.MobileMapper;
+import org.sse.eport.mapper.generated.EqInUseMapper;
+import org.sse.eport.mapper.generated.EqTypeMapper;
+import org.sse.eport.mapper.generated.PatrolRegionMapper;
+import org.sse.eport.pojo.EqType;
+import org.sse.eport.pojo.PatrolExample;
+import org.sse.eport.pojo.PatrolRegion;
+import org.sse.eport.pojo.PatrolRegionExample;
 
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author ZTL
@@ -24,8 +32,14 @@ import java.util.Date;
 public class MobileService {
     @Autowired
     private MobileMapper mobileMapper;
+    @Autowired
+    PatrolRegionMapper patrolRegionMapper;
+    @Autowired
+    EqInUseMapper eqInUseMapper;
+    @Autowired
+    EqTypeMapper eqTypeMapper;
 
-    public Result postRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever){
+    public Result postRepairOrder(MobileRepairOrderPutReciever mobileRepairOrderReciever) {
         //添加报修单
         EqInUse eq = mobileMapper.findEqInUseById(Integer.valueOf(mobileRepairOrderReciever.deviceID));
         if ("1".equals(eq.getStatus())) {
@@ -47,22 +61,20 @@ public class MobileService {
         repair_order.setUpdate_time(now);
         try {
             mobileMapper.addRepairOrder(repair_order);
-            mobileMapper.updateStatusOfEqInUse(eq.getId(),"1");
+            mobileMapper.updateStatusOfEqInUse(eq.getId(), "1");
             log.info("添加了报修单");
             return Result.success();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return Result.fail();
         }
     }
 
-    public Result putRepairOrder(MobileRepairOrderPutReciever reciever){
+    public Result putRepairOrder(MobileRepairOrderPutReciever reciever) {
         //修改报修单
         RepairOrder repair_order = mobileMapper.findRepairOrderById(Integer.valueOf(reciever.id));
         if (repair_order == null) {
             return Result.fail();
-        }
-        else {
+        } else {
             repair_order.setEq_id(reciever.deviceID);
             repair_order.setReport_picture(reciever.imgURL);
             repair_order.setDescription(reciever.detail);
@@ -75,21 +87,15 @@ public class MobileService {
         }
     }
 
-    public Result postWorkOrder(MobileWorkOrderReciever mobileWorkOrderReciever){
+    public Result postWorkOrder(MobileWorkOrderReciever mobileWorkOrderReciever) {
         WorkOrder work_order = mobileMapper.findWorkOrderById(Integer.valueOf(mobileWorkOrderReciever.id));
-        if (work_order == null)
-        {
+        if (work_order == null) {
             return Result.fail();
-        }
-        else
-        {
-            try
-            {
-                mobileMapper.updateWorkOrderPicAndStatus(work_order.getId(),mobileWorkOrderReciever.imgURL,mobileWorkOrderReciever.status.toString());
+        } else {
+            try {
+                mobileMapper.updateWorkOrderPicAndStatus(work_order.getId(), mobileWorkOrderReciever.imgURL, mobileWorkOrderReciever.status.toString());
                 return Result.success();
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 return Result.fail();
             }
         }
@@ -109,5 +115,43 @@ public class MobileService {
         } else {
             return Result.fail();
         }
+    }
+
+    public Result getRepair(String id) {
+        PatrolRegionExample patrolRegionExample = new PatrolRegionExample();
+        PatrolRegionExample.Criteria criteria = patrolRegionExample.createCriteria();
+        criteria.andPatrolIdEqualTo(Integer.parseInt(id));
+        List<PatrolRegion> regionList = patrolRegionMapper.selectByExample(patrolRegionExample);
+        if (regionList.size() == 0) {
+            return Result.success();
+        }
+        List<Integer> regions = new ArrayList<>();
+        for (PatrolRegion region : regionList) {
+            regions.add(region.getRegionId());
+        }
+        List<MobileRepairOrderDto> mobileRepairOrderDtoList = new ArrayList<>();
+        List<RepairOrder> repairOrderList = mobileMapper.getRepairOrderWithEqInUse(regions);
+        for (RepairOrder repairOrder : repairOrderList) {
+            MobileRepairOrderDto dto = new MobileRepairOrderDto();
+            dto.setId(String.valueOf(repairOrder.getId()));
+            dto.setDevice_id(repairOrder.getEq_id());
+            EqType eqType = eqTypeMapper.selectByPrimaryKey(
+                    eqInUseMapper.selectByPrimaryKey(
+                            Integer.parseInt(repairOrder.getEq_id())).getId());
+            dto.setDevice_type(eqType.getTypeName());
+            dto.setDevice_model(eqType.getModelNumber());
+            dto.setAddress(repairOrder.getEq_in_use().getAddress());
+            Map<String, Double> pos = new HashMap<>();
+            pos.put("latitude", repairOrder.getEq_in_use().getLatitude());
+            pos.put("longtitude", repairOrder.getEq_in_use().getLongitude());
+            dto.setPosition(pos);
+            dto.setUrl(repairOrder.getReport_picture());
+            dto.setDetail(repairOrder.getDescription());
+            dto.setPhone(repairOrder.getTel_number());
+            mobileRepairOrderDtoList.add(dto);
+        }
+        Result result = Result.success();
+        result.setData(mobileRepairOrderDtoList);
+        return result;
     }
 }
