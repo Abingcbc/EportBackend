@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.sse.eport.mapper.generated.PatrolRegionMapper" >
+  <resultMap id="BaseResultMap" type="org.sse.eport.pojo.PatrolRegion" >
+    <id column="PATROL_ID" property="patrolId" jdbcType="INTEGER" />
+    <id column="REGION_ID" property="regionId" jdbcType="INTEGER" />
+    <result column="INSERT_BY" property="insertBy" jdbcType="VARCHAR" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+    <result column="INSERT_TIME" property="insertTime" jdbcType="DATE" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PATROL_ID, REGION_ID, INSERT_BY, UPDATE_BY, INSERT_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sse.eport.pojo.PatrolRegionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from patrol_region
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="org.sse.eport.pojo.PatrolRegionKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from patrol_region
+    where PATROL_ID = #{patrolId,jdbcType=INTEGER}
+      and REGION_ID = #{regionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="org.sse.eport.pojo.PatrolRegionKey" >
+    delete from patrol_region
+    where PATROL_ID = #{patrolId,jdbcType=INTEGER}
+      and REGION_ID = #{regionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sse.eport.pojo.PatrolRegionExample" >
+    delete from patrol_region
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sse.eport.pojo.PatrolRegion" >
+    insert into patrol_region (PATROL_ID, REGION_ID, INSERT_BY, 
+      UPDATE_BY, INSERT_TIME, UPDATE_TIME
+      )
+    values (#{patrolId,jdbcType=INTEGER}, #{regionId,jdbcType=INTEGER}, #{insertBy,jdbcType=VARCHAR}, 
+      #{updateBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sse.eport.pojo.PatrolRegion" >
+    insert into patrol_region
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="patrolId != null" >
+        PATROL_ID,
+      </if>
+      <if test="regionId != null" >
+        REGION_ID,
+      </if>
+      <if test="insertBy != null" >
+        INSERT_BY,
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY,
+      </if>
+      <if test="insertTime != null" >
+        INSERT_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="patrolId != null" >
+        #{patrolId,jdbcType=INTEGER},
+      </if>
+      <if test="regionId != null" >
+        #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="insertBy != null" >
+        #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        #{insertTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.sse.eport.pojo.PatrolRegionExample" resultType="java.lang.Integer" >
+    select count(*) from patrol_region
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update patrol_region
+    <set >
+      <if test="record.patrolId != null" >
+        PATROL_ID = #{record.patrolId,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionId != null" >
+        REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.insertBy != null" >
+        INSERT_BY = #{record.insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null" >
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertTime != null" >
+        INSERT_TIME = #{record.insertTime,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update patrol_region
+    set PATROL_ID = #{record.patrolId,jdbcType=INTEGER},
+      REGION_ID = #{record.regionId,jdbcType=INTEGER},
+      INSERT_BY = #{record.insertBy,jdbcType=VARCHAR},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      INSERT_TIME = #{record.insertTime,jdbcType=DATE},
+      UPDATE_TIME = #{record.updateTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sse.eport.pojo.PatrolRegion" >
+    update patrol_region
+    <set >
+      <if test="insertBy != null" >
+        INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        INSERT_TIME = #{insertTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where PATROL_ID = #{patrolId,jdbcType=INTEGER}
+      and REGION_ID = #{regionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sse.eport.pojo.PatrolRegion" >
+    update patrol_region
+    set INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      INSERT_TIME = #{insertTime,jdbcType=DATE},
+      UPDATE_TIME = #{updateTime,jdbcType=DATE}
+    where PATROL_ID = #{patrolId,jdbcType=INTEGER}
+      and REGION_ID = #{regionId,jdbcType=INTEGER}
+  </update>
+</mapper>

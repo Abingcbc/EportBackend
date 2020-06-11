@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.sse.eport.Basic.Result;
+import org.sse.eport.dto.MobilePatrolOrderReceiver;
 import org.sse.eport.dto.MobileRepairOrderPutReciever;
 import org.sse.eport.dto.MobileWorkOrderReciever;
 import org.sse.eport.entity.EqInUse;
+import org.sse.eport.entity.PatrolLog;
 import org.sse.eport.entity.RepairOrder;
 import org.sse.eport.entity.WorkOrder;
 import org.sse.eport.mapper.MobileMapper;
@@ -90,6 +92,22 @@ public class MobileService {
             {
                 return Result.fail();
             }
+        }
+    }
+
+    public Result postPatrolOrder(MobilePatrolOrderReceiver receiver) {
+        PatrolLog patrolLog = new PatrolLog();
+        patrolLog.setPatrol_id(receiver.getId());
+        patrolLog.setEq_id(receiver.getDeviceID());
+        patrolLog.setPatrol_time(receiver.getTime());
+        patrolLog.setPatrol_result(String.valueOf(receiver.getStatus()));
+        patrolLog.setPatrol_picture(receiver.getImageUrl());
+        patrolLog.setInsert_by(receiver.getId());
+        patrolLog.setUpdate_by(receiver.getId());
+        if (mobileMapper.addPatrolOrder(patrolLog)) {
+            return Result.success();
+        } else {
+            return Result.fail();
         }
     }
 }

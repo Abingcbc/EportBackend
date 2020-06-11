@@ -10,13 +10,13 @@ import java.util.Date;
 @Data
 public class PatrolLog {
     private Integer id;
-    private String patrol_id;
-    private String eq_id;
+    private Integer patrol_id;
+    private Integer eq_id;
     private String patrol_time;
     private String patrol_result;
     private String patrol_picture;
-    private String insert_by;
-    private String update_by;
+    private Integer insert_by;
+    private Integer update_by;
     private Date insert_time;
     private Date update_time;
 

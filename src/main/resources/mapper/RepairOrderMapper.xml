@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.sse.eport.mapper.generated.RepairOrderMapper" >
+  <resultMap id="BaseResultMap" type="org.sse.eport.pojo.RepairOrder" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="REPORT_PICTURE" property="reportPicture" jdbcType="VARCHAR" />
+    <result column="REPAIR_TYPE" property="repairType" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="TEL_NUMBER" property="telNumber" jdbcType="VARCHAR" />
+    <result column="EQ_ID" property="eqId" jdbcType="INTEGER" />
+    <result column="DISPATCHER_ID" property="dispatcherId" jdbcType="INTEGER" />
+    <result column="INSERT_BY" property="insertBy" jdbcType="VARCHAR" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+    <result column="INSERT_TIME" property="insertTime" jdbcType="DATE" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, REPORT_PICTURE, REPAIR_TYPE, DESCRIPTION, STATUS, TEL_NUMBER, EQ_ID, DISPATCHER_ID, 
+    INSERT_BY, UPDATE_BY, INSERT_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.sse.eport.pojo.RepairOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from repair_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from repair_order
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from repair_order
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.sse.eport.pojo.RepairOrderExample" >
+    delete from repair_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.sse.eport.pojo.RepairOrder" >
+    insert into repair_order (ID, REPORT_PICTURE, REPAIR_TYPE, 
+      DESCRIPTION, STATUS, TEL_NUMBER, 
+      EQ_ID, DISPATCHER_ID, INSERT_BY, 
+      UPDATE_BY, INSERT_TIME, UPDATE_TIME
+      )
+    values (#{id,jdbcType=INTEGER}, #{reportPicture,jdbcType=VARCHAR}, #{repairType,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{telNumber,jdbcType=VARCHAR}, 
+      #{eqId,jdbcType=INTEGER}, #{dispatcherId,jdbcType=INTEGER}, #{insertBy,jdbcType=VARCHAR}, 
+      #{updateBy,jdbcType=VARCHAR}, #{insertTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.sse.eport.pojo.RepairOrder" >
+    insert into repair_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="reportPicture != null" >
+        REPORT_PICTURE,
+      </if>
+      <if test="repairType != null" >
+        REPAIR_TYPE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="telNumber != null" >
+        TEL_NUMBER,
+      </if>
+      <if test="eqId != null" >
+        EQ_ID,
+      </if>
+      <if test="dispatcherId != null" >
+        DISPATCHER_ID,
+      </if>
+      <if test="insertBy != null" >
+        INSERT_BY,
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY,
+      </if>
+      <if test="insertTime != null" >
+        INSERT_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="reportPicture != null" >
+        #{reportPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="repairType != null" >
+        #{repairType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="telNumber != null" >
+        #{telNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="eqId != null" >
+        #{eqId,jdbcType=INTEGER},
+      </if>
+      <if test="dispatcherId != null" >
+        #{dispatcherId,jdbcType=INTEGER},
+      </if>
+      <if test="insertBy != null" >
+        #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        #{insertTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.sse.eport.pojo.RepairOrderExample" resultType="java.lang.Integer" >
+    select count(*) from repair_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update repair_order
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.reportPicture != null" >
+        REPORT_PICTURE = #{record.reportPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repairType != null" >
+        REPAIR_TYPE = #{record.repairType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telNumber != null" >
+        TEL_NUMBER = #{record.telNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eqId != null" >
+        EQ_ID = #{record.eqId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dispatcherId != null" >
+        DISPATCHER_ID = #{record.dispatcherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.insertBy != null" >
+        INSERT_BY = #{record.insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null" >
+        UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insertTime != null" >
+        INSERT_TIME = #{record.insertTime,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update repair_order
+    set ID = #{record.id,jdbcType=INTEGER},
+      REPORT_PICTURE = #{record.reportPicture,jdbcType=VARCHAR},
+      REPAIR_TYPE = #{record.repairType,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      TEL_NUMBER = #{record.telNumber,jdbcType=VARCHAR},
+      EQ_ID = #{record.eqId,jdbcType=INTEGER},
+      DISPATCHER_ID = #{record.dispatcherId,jdbcType=INTEGER},
+      INSERT_BY = #{record.insertBy,jdbcType=VARCHAR},
+      UPDATE_BY = #{record.updateBy,jdbcType=VARCHAR},
+      INSERT_TIME = #{record.insertTime,jdbcType=DATE},
+      UPDATE_TIME = #{record.updateTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.sse.eport.pojo.RepairOrder" >
+    update repair_order
+    <set >
+      <if test="reportPicture != null" >
+        REPORT_PICTURE = #{reportPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="repairType != null" >
+        REPAIR_TYPE = #{repairType,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="telNumber != null" >
+        TEL_NUMBER = #{telNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="eqId != null" >
+        EQ_ID = #{eqId,jdbcType=INTEGER},
+      </if>
+      <if test="dispatcherId != null" >
+        DISPATCHER_ID = #{dispatcherId,jdbcType=INTEGER},
+      </if>
+      <if test="insertBy != null" >
+        INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        INSERT_TIME = #{insertTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.sse.eport.pojo.RepairOrder" >
+    update repair_order
+    set REPORT_PICTURE = #{reportPicture,jdbcType=VARCHAR},
+      REPAIR_TYPE = #{repairType,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      TEL_NUMBER = #{telNumber,jdbcType=VARCHAR},
+      EQ_ID = #{eqId,jdbcType=INTEGER},
+      DISPATCHER_ID = #{dispatcherId,jdbcType=INTEGER},
+      INSERT_BY = #{insertBy,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      INSERT_TIME = #{insertTime,jdbcType=DATE},
+      UPDATE_TIME = #{updateTime,jdbcType=DATE}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -4,6 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 import org.sse.eport.entity.EqInUse;
+import org.sse.eport.entity.PatrolLog;
 import org.sse.eport.entity.RepairOrder;
 import org.sse.eport.entity.WorkOrder;
 
@@ -18,10 +19,10 @@ public interface MobileMapper {
             "where id = #{id}")
     EqInUse findEqInUseById(@Param("id")Integer id);
 
-    @Insert("insert into repair_order(id,report_picture,repair_type," +
+    @Insert("insert into repair_order(report_picture,repair_type," +
             "description,status,tel_number,eq_id,dispatcher_id,insert_by," +
             "update_by,insert_time,update_time) " +
-            "values(#{id},#{report_picture},#{repair_type}," +
+            "values(#{report_picture},#{repair_type}," +
             "#{description},#{status},#{tel_number},#{eq_id},#{dispatcher_id},#{insert_by}," +
             "#{update_by},#{insert_time},#{update_time})")
     Boolean addRepairOrder(RepairOrder repairOrder);
@@ -54,4 +55,8 @@ public interface MobileMapper {
     Boolean updateWorkOrderPicAndStatus(@Param("id")Integer id,
                                         @Param("workPicture")String workPicture,
                                         @Param("status")String status);
+
+    @Insert("insert into patrol_log(patrol_id, eq_id, patrol_time, patrol_result, patrol_picture, insert_by, update_by, insert_time, update_time) \n" +
+            "value (#{patrol_id}, #{eq_id}, #{patrol_time}, #{patrol_result}, #{patrol_picture}, #{insert_by}, #{update_by}, NOW(), NOW())")
+    Boolean addPatrolOrder(PatrolLog patrolLog);
 }
