@@ -42,7 +42,7 @@ namespace Eport.Controllers
 
         [HttpPost]
         [Route("api/sheets/scheduleDetail")]
-        public async Task<IHttpActionResult> scehduleRepairSheet(repairSheetReceiver input)
+        public async Task<IHttpActionResult> scheduleRepairSheet(repairSheetReceiver input)
         {
             try
             {
@@ -69,6 +69,22 @@ namespace Eport.Controllers
                         availableList.OrderBy(w => Math.Pow((double)w.WAREHOUSE.LATITUDE - (double)oldEqLocation[0], 2) + Math.Pow((double)w.WAREHOUSE.LONGITUDE - (double)oldEqLocation[1], 2));
                         var nearest = availableList.First();
                         db.EQ_STORED.Remove(nearest);
+                        db.EQ_IN_USE.Add(new EQ_IN_USE()
+                        {
+                            PRODUCTION_TIME = nearest.PRODUCT_TIME,
+                            OWNER = oldEq.OWNER,
+                            MANAGER = oldEq.MANAGER,
+                            STATUS = "1",
+                            ADDRESS = oldEq.ADDRESS,
+                            LONGITUDE = oldEq.LONGITUDE,
+                            LATITUDE = oldEq.LATITUDE,
+                            QR_CODE = "https://i.loli.net/2020/06/13/GqovelZg2pwOdB6.png",
+                            REGION_ID = oldEq.REGION_ID,
+                            INSERT_BY = dispatcher.ID,
+                            UPDATE_BY = dispatcher.ID,
+                            INSERT_TIME = DateTime.Now,
+                            UPDATE_TIME = DateTime.Now
+                        })
                     }
                     else
                     {

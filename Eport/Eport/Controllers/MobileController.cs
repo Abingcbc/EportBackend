@@ -162,7 +162,9 @@ namespace Eport.Controllers
                 {
                     work_order.WORK_PICTURE = mobileWorkOrderReciever.imgURL;
                     work_order.STATUS = mobileWorkOrderReciever.status.ToString();
-                    db.EQ_IN_USE.Find(work_order.EQ_ID).STATUS = "0";
+                    var temp = db.EQ_IN_USE.Find(work_order.EQ_ID);
+                    temp.STATUS = "0";
+                    temp.INSTALL_TIME = DateTime.Now.ToString();
                     db.SaveChanges();
                     NotificationController.NotificationCallbackMsg("改", "更改了工单");
                     return Ok(returnHelper.make("success"));
