@@ -84,7 +84,7 @@ namespace Eport.Controllers
                             UPDATE_BY = dispatcher.ID,
                             INSERT_TIME = DateTime.Now,
                             UPDATE_TIME = DateTime.Now
-                        })
+                        });
                     }
                     else
                     {
