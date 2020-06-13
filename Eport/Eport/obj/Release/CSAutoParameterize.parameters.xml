@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="OracleDbContext-Web.config Connection String" description="OracleDbContext 由应用程序在 web.config 中用来访问数据库的连接字符串。" defaultValue="User Id=oracle_user;Password=oracle_user_password;Data Source=oracle" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="E:\\Project\\C\#\\EportBackend\\Eport\\Eport\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='OracleDbContext']/@connectionString" />
-  </parameter>
-  <parameter name="Entities-Web.config Connection String" description="Entities 由应用程序在 web.config 中用来访问数据库的连接字符串。" defaultValue="metadata=res://*/Models.EportModel.csdl|res://*/Models.EportModel.ssdl|res://*/Models.EportModel.msl;provider=Oracle.ManagedDataAccess.Client;provider connection string=&quot;DATA SOURCE=abingcbc.cn:1521/xe;PASSWORD=eport;USER ID=EPORT&quot;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="E:\\Project\\C\#\\EportBackend\\Eport\\Eport\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Entities']/@connectionString" />
-  </parameter>
-</parameters>
