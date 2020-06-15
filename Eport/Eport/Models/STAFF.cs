@@ -11,7 +11,8 @@ namespace Eport.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class STAFF
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +21,6 @@ namespace Eport.Models
             this.STAFF1 = new HashSet<STAFF>();
             this.STAFF11 = new HashSet<STAFF>();
         }
-    
         public string ID { get; set; }
         public string NAME { get; set; }
         public string ACCOUNT_ID { get; set; }
