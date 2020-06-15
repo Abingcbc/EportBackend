@@ -195,12 +195,14 @@ namespace Eport.Controllers
                         ACCOUNT_ID = input.status == "0" ? "p" : input.status == "1" ? "r" : input.status == "2" ? "d" : "x"
                     };
                     db.STAFF.Add(staff);
-                    await db.SaveChangesAsync();
+                    db.SaveChanges();
+                    var staffID = db.STAFF.OrderByDescending(s => s.ID).FirstOrDefault().ID;
+                    System.Diagnostics.Debug.Write(staffID + "\n");
                     if (input.status == "0")
                     {
                         var patrol = new PATROL
                         {
-                            ID = staff.ID,
+                            ID = staffID,
                             PATROL_START = input.startTime,
                             PATROL_STOP = input.endTime
                         };
@@ -210,7 +212,7 @@ namespace Eport.Controllers
                     {
                         var repairer = new REPAIRER
                         {
-                            ID = staff.ID,
+                            ID = staffID,
                         };
                         db.REPAIRER.Add(repairer);
                     }
@@ -218,7 +220,7 @@ namespace Eport.Controllers
                     {
                         var dispatcher = new DISPATCHER
                         {
-                            ID = staff.ID,
+                            ID = staffID,
                             DISPATCH_START = input.startTime,
                             DISPATCH_STOP = input.endTime
                         };
@@ -234,9 +236,10 @@ namespace Eport.Controllers
                         info2 = staff.ACCOUNT_ID
                     });
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     trans.Rollback();
+                    System.Diagnostics.Debug.Write(e);
                     return Ok(returnHelper.fail());
                 }
             }
