@@ -34,7 +34,9 @@ namespace Eport.Controllers
                     checkTime = p.p.PATROL_TIME,
                     eqID = "EQ" + EQ.ID,
                     potrolID = "ST" + p.staff.ID,
-                    potrolName = p.staff.NAME
+                    potrolName = p.staff.NAME,
+                    createTime = (DateTime)p.p.INSERT_TIME,
+                    updateTime = (DateTime)p.p.UPDATE_TIME
                 });
             return returnHelper.make(checkSheets);
         }

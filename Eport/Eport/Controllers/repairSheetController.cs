@@ -33,7 +33,9 @@ namespace Eport.Controllers
                     details = details[0],
                     stuffNeeded = details.Count() <= 1 ? null : details[1],
                     telNumber = r.TEL_NUMBER,
-                    EqId = "EQ" + r.EQ_ID
+                    EqId = "EQ" + r.EQ_ID,
+                    createTime = (DateTime)r.INSERT_TIME,
+                    updateTime = (DateTime)r.UPDATE_TIME
                 });
             }
             return returnHelper.make(result);

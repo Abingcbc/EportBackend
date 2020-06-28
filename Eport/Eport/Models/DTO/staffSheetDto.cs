@@ -22,7 +22,9 @@
         }
         public string roleName { get; set; }
         public string var { get; set; }
-        public static List<StaffItem> makeRow(string phone,string idNumber,string C_T,string M_T,string S_T,string E_T)
+        public static List<StaffItem> makeRow(string phone,string idNumber,
+            string C_T,string M_T,string S_T,string E_T, 
+            string monthWorkCount, string allWorkCount)
         {
             var row = new List<StaffItem>();
             row.Add(new StaffItem("电话号码", phone));
@@ -31,6 +33,8 @@
             row.Add(new StaffItem("账户最近修改时间", M_T));
             row.Add(new StaffItem("每周工作开始时间", S_T));
             row.Add(new StaffItem("每周工作结束时间", E_T));
+            row.Add(new StaffItem("本月业务量", monthWorkCount));
+            row.Add(new StaffItem("总业务量", allWorkCount));
             return row;
         }
     }

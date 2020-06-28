@@ -14,5 +14,7 @@
         public string work_picture { get; set; }
         public string dispatcherName { get; set; }
         public string repairerName { get; set; }
+        public DateTime createTime { get; set; }
+        public DateTime updateTime { get; set; }
     }
 }

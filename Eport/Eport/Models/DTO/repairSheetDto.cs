@@ -13,6 +13,8 @@
         public string stuffNeeded { get; set; }
         public string telNumber { get; set; }
         public string EqId { get; set; }
+        public DateTime createTime { get; set; }
+        public DateTime updateTime { get; set; }
     }
 
     public partial class repairSheetReceiver

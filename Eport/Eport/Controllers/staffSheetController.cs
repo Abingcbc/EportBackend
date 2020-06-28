@@ -36,7 +36,13 @@ namespace Eport.Controllers
             var result = new List<staffDto>();
             //repairer
             foreach (var r in db.REPAIRER.Include(r => r.STAFF).Where(r => r.STAFF.IS_SUPER == "0"))
-            {
+            { 
+                var monthWorkCount = db.WORK_ORDER
+                    .Where(wo => wo.REPAIRER_ID == r.ID && 
+                    DateTime.Compare((DateTime)wo.INSERT_TIME, 
+                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)) > 0).Count();
+                var allWorkCount = db.WORK_ORDER
+                    .Where(wo => wo.REPAIRER_ID == r.ID).Count();
                 result.Add(new staffDto
                 {
                     id = "ST" + r.ID,
@@ -46,12 +52,18 @@ namespace Eport.Controllers
                     status = "1",
                     detail = StaffItem.makeRow(r.STAFF.TEL_NUMBER, r.STAFF.ID_CARD_NUMBER,
                      r.STAFF.INSERT_TIME.ToString(), r.STAFF.UPDATE_TIME.ToString(),
-                     "周一", "周日")
+                     "周一", "周日", monthWorkCount.ToString(), allWorkCount.ToString())
                 });
             }
 
             foreach (var r in db.PATROL.Include(r => r.STAFF).Where(r => r.STAFF.IS_SUPER == "0"))
             {
+                var monthWorkCount = db.PATROL_LOG
+                    .Where(wo => wo.PATROL_ID == r.ID &&
+                    DateTime.Compare((DateTime)wo.INSERT_TIME,
+                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)) > 0).Count();
+                var allWorkCount = db.PATROL_LOG
+                    .Where(wo => wo.PATROL_ID == r.ID).Count();
                 result.Add(new staffDto()
                 {
                     id = "ST" + r.ID,
@@ -59,11 +71,20 @@ namespace Eport.Controllers
                     accountID = r.STAFF.ACCOUNT_ID,
                     password = r.STAFF.PASSWORD,
                     status = "0",
-                    detail = StaffItem.makeRow(r.STAFF.TEL_NUMBER, r.STAFF.ID_CARD_NUMBER, r.STAFF.INSERT_TIME.ToString(), r.STAFF.UPDATE_TIME.ToString(), r.PATROL_START, r.PATROL_STOP)
+                    detail = StaffItem.makeRow(r.STAFF.TEL_NUMBER,
+                    r.STAFF.ID_CARD_NUMBER, r.STAFF.INSERT_TIME.ToString(),
+                    r.STAFF.UPDATE_TIME.ToString(), r.PATROL_START, r.PATROL_STOP,
+                    monthWorkCount.ToString(), allWorkCount.ToString())
                 });
             }
             foreach (var r in db.DISPATCHER.Include(r => r.STAFF).Where(r => r.STAFF.IS_SUPER == "0"))
             {
+                var monthWorkCount = db.REPAIR_ORDER
+                    .Where(wo => wo.DISPATCHER_ID == r.ID &&
+                    DateTime.Compare((DateTime)wo.INSERT_TIME,
+                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)) > 0).Count();
+                var allWorkCount = db.REPAIR_ORDER
+                    .Where(wo => wo.DISPATCHER_ID == r.ID).Count();
                 result.Add(new staffDto()
                 {
                     id = "ST" + r.ID,
@@ -71,7 +92,10 @@ namespace Eport.Controllers
                     accountID = r.STAFF.ACCOUNT_ID,
                     password = r.STAFF.PASSWORD,
                     status = "2",
-                    detail = StaffItem.makeRow(r.STAFF.TEL_NUMBER, r.STAFF.ID_CARD_NUMBER, r.STAFF.INSERT_TIME.ToString(), r.STAFF.UPDATE_TIME.ToString(), r.DISPATCH_START, r.DISPATCH_START)
+                    detail = StaffItem.makeRow(r.STAFF.TEL_NUMBER, r.STAFF.ID_CARD_NUMBER, 
+                    r.STAFF.INSERT_TIME.ToString(), r.STAFF.UPDATE_TIME.ToString(), 
+                    r.DISPATCH_START, r.DISPATCH_START,
+                    monthWorkCount.ToString(), allWorkCount.ToString())
                 });
             }
             return result;

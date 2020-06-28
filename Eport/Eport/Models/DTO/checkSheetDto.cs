@@ -12,6 +12,8 @@
         public string checkArea { get; set; }
         public string checkTime { get; set; }
         public string checkPic { get; set; }
+        public DateTime createTime { get; set; }
+        public DateTime updateTime { get; set; }
     }
 
     public partial class deleteCheckSheetDto

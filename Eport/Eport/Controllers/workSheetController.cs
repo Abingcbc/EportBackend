@@ -39,7 +39,9 @@ namespace Eport.Controllers
                     statue = w.w.w.STATUS,
                     work_picture = w.w.w.WORK_PICTURE,
                     repairerName = w.w.repairer.NAME,
-                    dispatcherName = w.dispatcher.NAME
+                    dispatcherName = w.dispatcher.NAME,
+                    createTime = (DateTime)w.w.w.INSERT_TIME,
+                    updateTime = (DateTime)w.w.w.UPDATE_TIME
                 }).ToList();
             foreach (var record in workSheets)
             {
