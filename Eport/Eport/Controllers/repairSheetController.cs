@@ -59,7 +59,7 @@ namespace Eport.Controllers
                     throw new Exception();
                 db.Entry(repairSheet).Reference(e => e.EQ_IN_USE).Load();
                 var oldEq = repairSheet.EQ_IN_USE;
-                oldEq.STATUS = "0";
+                oldEq.STATUS = "1"; // 1: broken 0: normal
                 decimal?[] oldEqLocation = new decimal?[2] { repairSheet.EQ_IN_USE.LATITUDE, repairSheet.EQ_IN_USE.LONGITUDE };
                 foreach (var requirement in input.ls)
                 {
@@ -112,7 +112,7 @@ namespace Eport.Controllers
                     INSERT_TIME = DateTime.Now,
                     INSERT_BY = dispatcher.ID,
                     REPAIRER_ID = input.stfId,
-                    WORK_PICTURE = dbConsts.unUploadUrl,
+                    WORK_PICTURE = repairSheet.REPORT_PICTURE,
                     STATUS = "0"
                 };
                 db.WORK_ORDER.Add(workSheet);

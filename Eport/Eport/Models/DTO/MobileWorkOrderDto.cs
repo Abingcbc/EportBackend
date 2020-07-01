@@ -14,9 +14,13 @@ namespace Eport.Models.DTO
         public string address { get; set; }
         public Dictionary<string, decimal?> position { get; set; }
         public string url { get; set; }
+        public DateTime createTime { get; set; }
+        public DateTime updateTime { get; set; }
 
         public MobileWorkOrderDto(string _id, string _device_id, string _address, 
-            decimal? _longtitude, decimal? _latitude, string _url, string _device_type, string _device_model)
+            decimal? _longtitude, decimal? _latitude, string _url, 
+            string _device_type, string _device_model,
+            DateTime? _createTime, DateTime? _updateTime)
         {
             id = _id;
             device_id = _device_id;
@@ -27,6 +31,8 @@ namespace Eport.Models.DTO
             position.Add("longtitude", _longtitude);
             device_type = _device_type;
             device_model = _device_model;
+            createTime = (DateTime)_createTime;
+            updateTime = (DateTime)_updateTime;
         }
     }
 }

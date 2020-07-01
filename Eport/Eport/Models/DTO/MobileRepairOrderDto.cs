@@ -16,6 +16,8 @@ namespace Eport.Models.DTO
         public string url { get; set; }
         public string detail { get; set; }
         public string phone { get; set; }
+        public DateTime? createTime { get; set; }
+        public DateTime? updateTime { get; set; }
     }
 
     public class MobileDeviceModelReciever

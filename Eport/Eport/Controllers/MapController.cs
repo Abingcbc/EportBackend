@@ -32,7 +32,8 @@ namespace Eport.Controllers
                     id = "WA" + e.ID,
                     name = e.NAME
                 }).ToList();
-            result.usingEquipment = db.EQ_IN_USE.Include(e => e.EQ_TYPE).Select(e => new MapEqDto()
+            result.usingEquipment = db.EQ_IN_USE.Include(e => e.EQ_TYPE).Where(e => e.STATUS == "1")
+                .Select(e => new MapEqDto()
             {
                 detailedAddress = e.ADDRESS,
                 lat = e.LATITUDE,

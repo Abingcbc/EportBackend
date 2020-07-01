@@ -35,12 +35,12 @@ namespace Eport.Controllers
         {
             var result = new List<staffDto>();
             //repairer
+            DateTime monthFirstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             foreach (var r in db.REPAIRER.Include(r => r.STAFF).Where(r => r.STAFF.IS_SUPER == "0"))
-            { 
+            {
                 var monthWorkCount = db.WORK_ORDER
                     .Where(wo => wo.REPAIRER_ID == r.ID && 
-                    DateTime.Compare((DateTime)wo.INSERT_TIME, 
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)) > 0).Count();
+                    DateTime.Compare((DateTime)wo.INSERT_TIME, monthFirstDay) > 0).Count();
                 var allWorkCount = db.WORK_ORDER
                     .Where(wo => wo.REPAIRER_ID == r.ID).Count();
                 result.Add(new staffDto
@@ -60,8 +60,7 @@ namespace Eport.Controllers
             {
                 var monthWorkCount = db.PATROL_LOG
                     .Where(wo => wo.PATROL_ID == r.ID &&
-                    DateTime.Compare((DateTime)wo.INSERT_TIME,
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)) > 0).Count();
+                    DateTime.Compare((DateTime)wo.INSERT_TIME, monthFirstDay) > 0).Count();
                 var allWorkCount = db.PATROL_LOG
                     .Where(wo => wo.PATROL_ID == r.ID).Count();
                 result.Add(new staffDto()
@@ -81,8 +80,7 @@ namespace Eport.Controllers
             {
                 var monthWorkCount = db.REPAIR_ORDER
                     .Where(wo => wo.DISPATCHER_ID == r.ID &&
-                    DateTime.Compare((DateTime)wo.INSERT_TIME,
-                    new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1)) > 0).Count();
+                    DateTime.Compare((DateTime)wo.INSERT_TIME, monthFirstDay) > 0).Count();
                 var allWorkCount = db.REPAIR_ORDER
                     .Where(wo => wo.DISPATCHER_ID == r.ID).Count();
                 result.Add(new staffDto()

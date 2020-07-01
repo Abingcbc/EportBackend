@@ -213,7 +213,7 @@ namespace Eport.Controllers
             else
             {
                 List<MobileRepairOrderDto> result = new List<MobileRepairOrderDto>();
-                    var repair_orders_all = db.REPAIR_ORDER.Join(db.EQ_IN_USE.Where(q => regions.Contains(q.REGION_ID)), r => r.EQ_ID, e => e.ID,
+                var repair_orders_all = db.REPAIR_ORDER.Join(db.EQ_IN_USE.Where(q => regions.Contains(q.REGION_ID)), r => r.EQ_ID, e => e.ID,
                         (r, e) => new
                         {
                             id = r.ID,
@@ -224,10 +224,12 @@ namespace Eport.Controllers
                             url = r.REPORT_PICTURE,
                             detail = r.DESCRIPTION,
                             phone = r.TEL_NUMBER,
-                            status = r.STATUS
+                            status = r.STATUS,
+                            createTime = r.INSERT_TIME,
+                            updateTime = r.UPDATE_TIME
                         });
-                    var repair_orders = repair_orders_all.Where(r => r.status == "0");
-                    foreach (var repair_order in repair_orders)
+                var repair_orders = repair_orders_all.Where(r => r.status == "0");
+                foreach (var repair_order in repair_orders)
                     {
                         var pos_dic = new Dictionary<string, decimal?>();
                         pos_dic.Add("latitude", repair_order.latitude);
@@ -242,7 +244,9 @@ namespace Eport.Controllers
                             position = pos_dic,
                             url = repair_order.url,
                             detail = repair_order.detail,
-                            phone = repair_order.phone
+                            phone = repair_order.phone,
+                            createTime = repair_order.createTime,
+                            updateTime = repair_order.updateTime
                         });
                     }
                 return Ok(returnHelper.make(result));
@@ -262,7 +266,8 @@ namespace Eport.Controllers
             {
                 List<MobileWorkOrderDto> result = work_orders.Where(r => r.STATUS == "0").Select(r => new MobileWorkOrderDto(
                     r.ID, r.EQ_ID, r.EQ_IN_USE.ADDRESS, r.EQ_IN_USE.LONGITUDE, r.EQ_IN_USE.LATITUDE, r.WORK_PICTURE, 
-                    db.EQ_TYPE.Find(r.EQ_IN_USE.TYPE_ID).TYPE_NAME, db.EQ_TYPE.Find(r.EQ_IN_USE.TYPE_ID).MODEL_NUMBER)).ToList();
+                    db.EQ_TYPE.Find(r.EQ_IN_USE.TYPE_ID).TYPE_NAME, db.EQ_TYPE.Find(r.EQ_IN_USE.TYPE_ID).MODEL_NUMBER,
+                    r.INSERT_TIME, r.UPDATE_TIME)).ToList();
                 return Ok(returnHelper.make(result));
             }
         }
@@ -271,7 +276,8 @@ namespace Eport.Controllers
         [Route("api/mobile/accessory")]
         public IHttpActionResult GetAccessory(string id)
         {
-            var accessories = db.EQ_TYPE_ACCESSORY.Where(e => e.ACCESSORY_ID == id).Join(
+            var eqTypeId = db.EQ_IN_USE.Find(id).TYPE_ID;
+            var accessories = db.EQ_TYPE_ACCESSORY.Where(e => e.EQ_TYPE_ID == eqTypeId).Join(
                 db.ACCESSORY, e => e.ACCESSORY_ID, a => a.ID,
                 (e, a) => a.TYPE_NAME).ToList();
             if (accessories == null)

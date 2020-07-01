@@ -40,7 +40,7 @@ namespace Eport.Controllers
         //wyc
         [HttpGet]
         [Route("api/equipment/using")]
-        public async Task<IHttpActionResult> GetEqUsing()
+        public IHttpActionResult GetEqUsing()
         {
             var result = db.EQ_IN_USE.Include(e => e.EQ_TYPE).Select<EQ_IN_USE, EqInUseDto>
                 (e => new EqInUseDto
@@ -53,7 +53,7 @@ namespace Eport.Controllers
                 });
             return Ok(returnHelper.make(result));
         }
-
+        
         //wyc
         [HttpPost]
         [Route("api/equipment/detail")]
