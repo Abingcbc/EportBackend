@@ -107,10 +107,12 @@ namespace Eport.Controllers
                 var workSheet = new WORK_ORDER
                 {
                     ID = "0",
-                    DISPATCHER_ID = dispatcher.IS_SUPER=="1"?null:dispatcher.ID,
+                    DISPATCHER_ID = dispatcher.ID,
                     EQ_ID = repairSheet.EQ_ID,
                     INSERT_TIME = DateTime.Now,
                     INSERT_BY = dispatcher.ID,
+                    UPDATE_BY = dispatcher.ID,
+                    UPDATE_TIME = DateTime.Now,
                     REPAIRER_ID = input.stfId,
                     WORK_PICTURE = repairSheet.REPORT_PICTURE,
                     STATUS = "0"
